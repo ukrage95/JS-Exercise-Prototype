@@ -38,17 +38,26 @@ function Airplane(name) {
       - Give instances of Person a method `.toString()`:
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
-  
- function Person() {
-    
-  }
- 
- 
+          function Person(name, age) {
+            this.stomach = [];
+            this.name = name;
+            this.age = age;
+           
+            Person.prototype.eat = function(food) {
+             if(this.stomach.length != 11) {
+               this.stomach.push(food);
+             }
+            }
+           
+            Person.prototype.poop = function() {
+              this.stomach = [];
+            }
+           
+            Person.prototype.toString = function() {
+             return `${this.name} ${this.age}`;
+            }
+           }
 
-  
-  
-  
-  
   /*
     TASK 2
       - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -62,11 +71,22 @@ function Airplane(name) {
       - STRETCH: A car which runs out of `fuel` while driving can't drive any more distance:
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
-  
- function Car() {
-    
-  }
-  
+          function Car(model, mpg) {
+            this.model = model; 
+            this.milesPerGallon = mpg;
+            this.tank = 0;
+            this.odometer = 0;
+            Car.prototype.fill = function(gallons) {
+              this.tank += gallons;
+            }
+            Car.prototype.drive = function(dist) {
+             this.odometer += dist;
+             this.tank -= dist; 
+             if(this.tank <= 0) {
+                 return `I ran out of fuel at ${this.odometer} miles!`;
+             }
+            }
+           }
   
   /*
     TASK 3
@@ -75,20 +95,28 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
-  }
- 
-  
+          function Baby(name, age, favoriteToy) {
+            Person.call(this, age, name)
+             this.name = name;   
+             this.age = age;   
+             this.favoriteToy = favoriteToy;
+             Baby.prototype.play = function() {
+               return `Playing with ${favoriteToy}, ${favoriteToy} being the favorite toy.`;
+             }
+           
+             Person.call(this, name, age )
+           }
+           
+           
+           Baby.prototype = Object.create(Person.prototype)
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
-  */
-  
+  1.  this references the object that encloses it. 
+  2. this references one instance of an object.  
+  3. the object left of the dot of a function call will be that function/s this object. 
+  4. don't use arrow functions inside objects because arrow functions apply this to the outer context of when it called. 
+   
   
   ///////// END OF CHALLENGE /////////
 
